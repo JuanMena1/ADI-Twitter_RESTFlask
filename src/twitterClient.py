@@ -11,6 +11,7 @@ app.config['DEBUG'] = True
 oauth = OAuth()
 mySession=None
 currentUser=None
+glb_oauth=None
 
 app.secret_key = 'development'
 
@@ -80,12 +81,14 @@ def logout():
 @app.route('/oauthorized')
 def oauthorized():
     global mySession
+    global glb_oauth
     
     resp = twitter.authorized_response()
     if resp is None:
         flash('You denied the request to sign in.')
     else:
         mySession = resp
+        glb_oauth = OAuth1(twitter.consumer_key, client_secret=twitter.consumer_secret,resource_owner_key=mySession['oauth_token'], resource_owner_secret=mySession['oauth_token_secret'])
     return redirect(url_for('index', next=request.args.get('next')))
 
 
@@ -102,16 +105,14 @@ def deleteTweet():
 
 @app.route('/retweet', methods=['POST'])
 def retweet():
-    global mySession
-    global currentUser
+    global glb_oauth
 
     tweetID = request.form['retweetId']
 
     rt_url= twitter.base_url + 'statuses/retweet.json'
     rt_payload = {'id':tweetID}
-    rt_oauth = OAuth1(twitter.consumer_key, client_secret=twitter.consumer_secret,resource_owner_key=mySession['oauth_token'], resource_owner_secret=mySession['oauth_token_secret'])
 
-    rt_resp = requests.post(url=rt_url ,data=rt_payload,auth=rt_oauth)
+    rt_resp = requests.post(url=rt_url ,data=rt_payload,auth=glb_oauth)
     flash("Has retwiteado el tweet: " + tweetID)
 
     return redirect(url_for('index'))
@@ -119,19 +120,20 @@ def retweet():
 
 @app.route('/follow', methods=['POST'])
 def follow():
+    global glb_oauth
     userID = request.form['userId']
     userName = request.form['userName']
-
-    payload = {"authorization": twitter.consumer_key, 
-    "content-type": "application/json"}
-
+    
+    fl_url = twitter.base_url + 'friendships/create.json'
     if userID is '':
-        userID = userName
+        fl_payload = {'screen_name':userName}
+    else:
+        fl_payload = {'user_id':userID}
 
-    print(twitter.base_url)
+
+    fl_resp = requests.post(url=fl_url,data =fl_payload,auth=glb_oauth)
+        
     flash("Has empezado a seguir a: " + userName)
-    resp = requests.post(url = twitter.base_url + 'friendships/create/',data = json.dumps({"screen_name": userName}),headers=payload)
-    print(resp.status_code)
     
     return redirect(url_for('index'))
     
