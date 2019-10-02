@@ -66,6 +66,7 @@ def index():
 # Get auth token (request)
 @app.route('/login')
 def login():
+    print(request.args.get('next'))
     callback_url=url_for('oauthorized', next=request.args.get('next'))
     return twitter.authorize(callback=callback_url or request.referrer or None)
 
@@ -118,7 +119,7 @@ def deleteTweet():
     if(del_resp.status_code == 200):  
         flash("𝙄𝙣𝙛𝙤: Has eliminado el tweet: " + tweetID)
     else:
-        flash("𝙀𝙧𝙧𝙤𝙧: Ha habido un error al intentar eliminar el tweet:" + tweetID + ", el código de error es: "+del_resp.status_code)
+        flash("𝙀𝙧𝙧𝙤𝙧: Ha habido un error al intentar eliminar el tweet: " + tweetID + ", el código de error es: "+ str(del_resp.status_code))
 
     return redirect(url_for('index'))
 
@@ -141,7 +142,7 @@ def retweet():
     if(rt_resp.status_code == 200):  
         flash("𝙄𝙣𝙛𝙤: Has retwiteado el tweet: " + tweetID)
     else:
-        flash("𝙀𝙧𝙧𝙤𝙧: Ha habido un error al intentar retwitear el tweet:" + tweetID + ", el código de error es: "+rt_resp.status_code)
+        flash("𝙀𝙧𝙧𝙤𝙧: Ha habido un error al intentar retwitear el tweet: " + tweetID + ", el código de error es: "+ str(rt_resp.status_code))
 
     return redirect(url_for('index'))
 
@@ -149,7 +150,7 @@ def retweet():
 def follow():
     global mySession
     if (mySession is None):
-        flash("𝙀𝙧𝙧𝙤𝙧: No se ha podido seguir al usuario porque no estabas logeado, prueba de nuevo")
+        flash("𝙀𝙧𝙧𝙤𝙧: No se ha podido seguir al usuario porque no estabas logeado, prueba otra vez")
         return login()
 
     global glb_oauth
@@ -168,7 +169,7 @@ def follow():
     if(fl_resp.status_code == 200):  
         flash("𝙄𝙣𝙛𝙤: Has empezado a seguir a: " + userName)
     else:
-        flash("𝙀𝙧𝙧𝙤𝙧: Ha habido un error al intentar seguir a:" + userName + ", el código de error es: "+fl_resp.status_code)
+        flash("𝙀𝙧𝙧𝙤𝙧: Ha habido un error al intentar seguir a: " + userName + ", el código de error es: "+ str(fl_resp.status_code))
     
     return redirect(url_for('index'))
     
@@ -191,7 +192,7 @@ def tweet():
     if(tw_resp.status_code == 200):  
         flash("𝙄𝙣𝙛𝙤: Has twiteado: " + tw_text)
     else:
-        flash("𝙀𝙧𝙧𝙤𝙧: Ha habido un error al intentar twitear, el código de error es: "+ tw_resp.status_code)
+        flash("𝙀𝙧𝙧𝙤𝙧: Ha habido un error al intentar twitear, el código de error es: "+ str(tw_resp.status_code))
 
     return redirect(url_for('index'))
 
