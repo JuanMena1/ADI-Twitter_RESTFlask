@@ -102,7 +102,17 @@ def deleteTweet():
 
 @app.route('/retweet', methods=['POST'])
 def retweet():
+    global mySession
+    global currentUser
+
     tweetID = request.form['retweetId']
+
+    rt_url= twitter.base_url + 'statuses/retweet.json'
+    rt_payload = {'id':tweetID}
+    rt_oauth = OAuth1(twitter.consumer_key, client_secret=twitter.consumer_secret,resource_owner_key=mySession['oauth_token'], resource_owner_secret=mySession['oauth_token_secret'])
+
+    rt_resp = requests.post(url=rt_url ,data=rt_payload,auth=rt_oauth)
+    flash("Has retwiteado el tweet: " + tweetID)
 
     return redirect(url_for('index'))
 
