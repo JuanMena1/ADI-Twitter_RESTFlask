@@ -40,7 +40,7 @@
     <body>
       {%if user %}
         {% for e in tweets %}
-            *   {{e.id_str}}      {{e.text}}  <br />
+            *   {{e.id_str}} - {{e.user.screen_name}} : {{e.text}}  <br />
         {% endfor %}
       {% endif %}
     </body>

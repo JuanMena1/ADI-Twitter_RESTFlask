@@ -29,3 +29,6 @@ Respositorio para la realización del primer trabajo de ADI.
 ### Versión 3.0
  - Versión completa.
  - Se muestra la timeline del usuario.
+
+### Versión 3.1
+ - Muestra el nombre del usuario que publica el tweet en la timeline.
