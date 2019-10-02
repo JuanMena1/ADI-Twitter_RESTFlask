@@ -105,9 +105,13 @@ def deleteTweet():
     del_payload = {'id':tweetID}
 
     del_resp = requests.post(url=del_url ,data=del_payload,auth=glb_oauth)
-    flash("Has eliminado el tweet: " + tweetID)
-    return redirect(url_for('index'))
 
+    if(del_resp.status_code == 200):  
+        flash("Has eliminado el tweet: " + tweetID)
+    else:
+        flash("Ha habido un error al intentar eliminar el tweet:" + tweetID + ", el código de error es: "+del_resp.status_code)
+
+    return redirect(url_for('index'))
 
 @app.route('/retweet', methods=['POST'])
 def retweet():
@@ -119,10 +123,13 @@ def retweet():
     rt_payload = {'id':tweetID}
 
     rt_resp = requests.post(url=rt_url ,data=rt_payload,auth=glb_oauth)
-    flash("Has retwiteado el tweet: " + tweetID)
+
+    if(rt_resp.status_code == 200):  
+        flash("Has retwiteado el tweet: " + tweetID)
+    else:
+        flash("Ha habido un error al intentar retwitear el tweet:" + tweetID + ", el código de error es: "+rt_resp.status_code)
 
     return redirect(url_for('index'))
-
 
 @app.route('/follow', methods=['POST'])
 def follow():
@@ -138,34 +145,31 @@ def follow():
 
 
     fl_resp = requests.post(url=fl_url,data =fl_payload,auth=glb_oauth)
-        
-    flash("Has empezado a seguir a: " + userName)
+
+    if(fl_resp.status_code == 200):  
+        flash("Has empezado a seguir a: " + userName)
+    else:
+        flash("Ha habido un error al intentar seguir a:" + userName + ", el código de error es: "+fl_resp.status_code)
     
     return redirect(url_for('index'))
     
-
     
 @app.route('/tweet', methods=['POST'])
 def tweet():
-    # Paso 1: Si no estoy logueado redirigir a pagina de /login
-               # Usar currentUser y redirect
+    global glb_oauth
+    tw_text = request.form['tweetText']
     
+    tw_url = twitter.base_url + 'statuses/update.json'
+    tw_payload = {'status':tw_text}
 
+    tw_resp = requests.post(url=tw_url,data =tw_payload,auth=glb_oauth)
 
-    # Paso 2: Obtener los datos a enviar
-               # Usar request (form)
+    if(tw_resp.status_code == 200):  
+        flash("Has twiteado: " + tw_text)
+    else:
+        flash("Ha habido un error al intentar twitear, el código de error es: "+ tw_resp.status_code)
 
-    # Paso 3: Construir el request a enviar con los datos del paso 2
-               # Utilizar alguno de los metodos de la instancia twitter (post, request, get, ...)
-
-    # Paso 4: Comprobar que todo fue bien (no hubo errores) e informar al usuario
-               # La anterior llamada devuelve el response, mirar el estado (status)
-
-    # Paso 5: Redirigir a pagina principal (hecho)
     return redirect(url_for('index'))
-
-
-
 
 
 if __name__ == '__main__':

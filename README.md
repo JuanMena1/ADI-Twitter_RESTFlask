@@ -16,3 +16,7 @@ Respositorio para la realización del primer trabajo de ADI.
 
 ### Versión 1.2
  - Añadida funcionalidad: Eliminar Tweet.
+
+### Versión 2.0
+ - Todas las funcionalidades completas, incluido Twitear.
+ - Añadido control de fallos para los mensajes flash.
