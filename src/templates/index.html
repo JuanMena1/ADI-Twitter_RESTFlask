@@ -36,7 +36,13 @@
 
     <br/>
     <h3>Mis tweets</h3>
-
-    # Si hay tweets mostrarlos
+    <br /><br />
+    <body>
+      {%if user %}
+        {% for e in tweets %}
+            *   {{e.id_str}}      {{e.text}}  <br />
+        {% endfor %}
+      {% endif %}
+    </body>
     
 {% endblock %}

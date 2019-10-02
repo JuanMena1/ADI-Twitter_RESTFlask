@@ -55,7 +55,7 @@ def index():
     
     tweets = None
     if currentUser is not None:
-        resp = twitter.request('statuses/home_timeline.json')
+        resp = twitter.request('statuses/user_timeline.json')
         if resp.status == 200:
             tweets = resp.data
         #else:
@@ -92,9 +92,6 @@ def oauthorized():
     else:
         mySession = resp
         glb_oauth = OAuth1(twitter.consumer_key, client_secret=twitter.consumer_secret,resource_owner_key=mySession['oauth_token'], resource_owner_secret=mySession['oauth_token_secret'])
-        tw_timeline = requests.get(url='https://api.twitter.com/1.1/statuses/user_timeline.json?screen_name=' + mySession['screen_name'],auth=glb_oauth)
-        statuses = tw_timeline.json()
-        print("\n".join([status["text"] for status in statuses]))
 
     return redirect(url_for('index', next=request.args.get('next')))
 

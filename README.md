@@ -25,3 +25,7 @@ Respositorio para la realización del primer trabajo de ADI.
  - Añadido control de errores.
  - Mejora de la información mostrada por pantalla.
  - Falta mostrar la timeline del usuario activo.
+
+### Versión 3.0
+ - Versión completa.
+ - Se muestra la timeline del usuario.
