@@ -40,7 +40,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="/home/juan/Escritorio/ADI/Trabajos/templateTwitter"
+VIRTUAL_ENV="/home/s723/ESI/CUARTO/ADI/PROYECTOS/Twitter API REST Flask"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"

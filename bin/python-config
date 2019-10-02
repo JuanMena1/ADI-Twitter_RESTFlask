@@ -1,4 +1,4 @@
-#!/home/juan/Escritorio/ADI/Trabajos/templateTwitter/bin/python
+#!/home/s723/ESI/CUARTO/ADI/PROYECTOS/Twitter API REST Flask/bin/python
 
 import sys
 import getopt

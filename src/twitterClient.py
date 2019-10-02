@@ -3,7 +3,8 @@
 
 from flask import Flask, request, redirect, url_for, flash, render_template
 from flask_oauthlib.client import OAuth
-import requests
+import requests, json
+from requests_oauthlib import OAuth1
 
 app = Flask(__name__)
 app.config['DEBUG'] = True
@@ -94,7 +95,7 @@ def oauthorized():
 @app.route('/deleteTweet', methods=['POST'])
 def deleteTweet():
     tweetID = request.form['deleteTweetId']
-    requests.post('https://api.twitter.com/1.1/statuses/destroy/' + tweetID+ '.json')
+    requests.post(twitter.base_url + 'statuses/destroy/' + tweetID)
     flash('Tweet ID: '+tweetID+ ' borrado')
     return redirect(url_for('index'))
 
@@ -111,15 +112,15 @@ def follow():
     userID = request.form['userId']
     userName = request.form['userName']
 
-    data = {'screen_name': userName, 
-    'user_id': userID}
+    payload = {"authorization": twitter.consumer_key, 
+    "content-type": "application/json"}
 
     if userID is '':
         userID = userName
 
-    print(userID)
-    flash()
-    resp = requests.post('https://api.twitter.com/1.1/friendships/create.json?user_id=' + userID + '&follow=true', headers=data)
+    print(twitter.base_url)
+    flash("Has empezado a seguir a: " + userName)
+    resp = requests.post(url = twitter.base_url + 'friendships/create/',data = json.dumps({"screen_name": userName}),headers=payload)
     print(resp.status_code)
     
     return redirect(url_for('index'))

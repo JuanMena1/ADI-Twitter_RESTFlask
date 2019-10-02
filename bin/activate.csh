@@ -7,7 +7,7 @@ alias deactivate 'test $?_OLD_VIRTUAL_PATH != 0 && setenv PATH "$_OLD_VIRTUAL_PA
 # Unset irrelevant variables.
 deactivate nondestructive
 
-setenv VIRTUAL_ENV "/home/juan/Escritorio/ADI/Trabajos/templateTwitter"
+setenv VIRTUAL_ENV "/home/s723/ESI/CUARTO/ADI/PROYECTOS/Twitter API REST Flask"
 
 set _OLD_VIRTUAL_PATH="$PATH"
 setenv PATH "$VIRTUAL_ENV/bin:$PATH"

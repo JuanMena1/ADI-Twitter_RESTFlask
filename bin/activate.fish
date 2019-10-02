@@ -36,7 +36,7 @@ end
 # Unset irrelevant variables.
 deactivate nondestructive
 
-set -gx VIRTUAL_ENV "/home/juan/Escritorio/ADI/Trabajos/templateTwitter"
+set -gx VIRTUAL_ENV "/home/s723/ESI/CUARTO/ADI/PROYECTOS/Twitter API REST Flask"
 
 set -gx _OLD_VIRTUAL_PATH $PATH
 set -gx PATH "$VIRTUAL_ENV/bin" $PATH
