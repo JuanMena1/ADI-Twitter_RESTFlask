@@ -97,9 +97,15 @@ def oauthorized():
 # Operaciones
 @app.route('/deleteTweet', methods=['POST'])
 def deleteTweet():
+    global glb_oauth
+
     tweetID = request.form['deleteTweetId']
-    requests.post(twitter.base_url + 'statuses/destroy/' + tweetID)
-    flash('Tweet ID: '+tweetID+ ' borrado')
+
+    del_url= twitter.base_url + 'statuses/destroy.json'
+    del_payload = {'id':tweetID}
+
+    del_resp = requests.post(url=del_url ,data=del_payload,auth=glb_oauth)
+    flash("Has eliminado el tweet: " + tweetID)
     return redirect(url_for('index'))
 
 

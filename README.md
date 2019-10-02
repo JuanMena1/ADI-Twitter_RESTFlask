@@ -13,3 +13,6 @@ Respositorio para la realización del primer trabajo de ADI.
  - Segunda funcionalidad completada: Seguir a alguien.
  - Se ha quitado codigo repetido y se han actualizado las anteriores funciones para utilizar el código global
    - La parte de obtener la autorización de oauth se hacia en cada función en lugar de una vez al principio
+
+### Versión 1.2
+ - Añadida funcionalidad: Eliminar Tweet.
